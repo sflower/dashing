@@ -25,6 +25,10 @@ set :auth_token, nil
 
 helpers Sinatra::ContentFor
 helpers do
+  def hello
+    puts "hello"
+  end
+  
   def protected!
     # override with auth logic
   end
