@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'sinatra/contrib'
 require 'sprockets'
 require 'sinatra/content_for'
 require 'rufus/scheduler'
@@ -51,6 +52,7 @@ end
 get '/:dashboard' do
   protected!
   if File.exist? File.join(settings.views, "#{params[:dashboard]}.erb")
+    set_last_cookies(cookies)
     erb params[:dashboard].to_sym, :locals => {:cookies => cookies}
   else
     halt 404
@@ -110,6 +112,14 @@ def first_dashboard
   files = Dir[File.join(settings.views, '*.erb')].collect { |f| f.match(/(\w*).erb/)[1] }
   files -= ['layout']
   files.first
+end
+
+def set_last_cookies(last_cookies)
+  @previous_cookies = last_cookies
+end
+
+def get_cookies
+  @previous_cookies
 end
 
 Dir[File.join(settings.root, 'lib', '**', '*.rb')].each {|file| require file }
