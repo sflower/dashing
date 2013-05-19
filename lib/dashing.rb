@@ -51,7 +51,7 @@ end
 get '/:dashboard' do
   protected!
   if File.exist? File.join(settings.views, "#{params[:dashboard]}.erb")
-    erb params[:dashboard].to_sym cookies
+    erb params[:dashboard].to_sym, :locals => {:cookies => cookies}
   else
     halt 404
   end
