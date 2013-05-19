@@ -25,10 +25,6 @@ set :auth_token, nil
 
 helpers Sinatra::ContentFor
 helpers do
-  def hello
-    puts "hello"
-  end
-  
   def protected!
     # override with auth logic
   end
@@ -55,7 +51,7 @@ end
 get '/:dashboard' do
   protected!
   if File.exist? File.join(settings.views, "#{params[:dashboard]}.erb")
-    erb params[:dashboard].to_sym
+    erb params[:dashboard].to_sym cookies
   else
     halt 404
   end
