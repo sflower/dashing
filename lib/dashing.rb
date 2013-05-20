@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'sinatra/contrib'
+require "sinatra/cookies"
 require 'sprockets'
 require 'sinatra/content_for'
 require 'rufus/scheduler'
@@ -115,11 +116,11 @@ def first_dashboard
 end
 
 def set_last_cookies(last_cookies)
-  @previous_cookies = last_cookies
+  $previous_cookies = last_cookies
 end
 
 def get_cookies
-  @previous_cookies
+  $previous_cookies
 end
 
 Dir[File.join(settings.root, 'lib', '**', '*.rb')].each {|file| require file }
